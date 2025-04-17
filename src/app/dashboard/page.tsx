@@ -14,10 +14,8 @@ const Dashboard = () => {
   return (
     <>
       <div className="">
-        {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Add User Card */}
             <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100 hover:shadow-md transition-all">
               <div className="p-5 sm:p-6">
                 <div className="flex items-start">
@@ -46,7 +44,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Manage Users Card */}
             <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100 hover:shadow-md transition-all">
               <div className="p-5 sm:p-6">
                 <div className="flex items-start">
@@ -76,7 +73,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Logout Card */}
             <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100 hover:shadow-md transition-all">
               <div className="p-5 sm:p-6">
                 <div className="flex items-start">
