@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { supabase } from '@/lib/supabase';
 import SuccessModal from '@/components/ui/Successmodal';
-
+import Link from 'next/link';
 export default function AddUserPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -32,10 +32,8 @@ export default function AddUserPage() {
     setLoading(false)
 
     if (error) {
-      setMessage("خطا در ذخیره کاربر 😢")
       console.error(error)
     } else {
-      setMessage("کاربر با موفقیت اضافه شد 🎉")
       setIsModalOpen(true)
     }
     setName('');
@@ -50,15 +48,23 @@ export default function AddUserPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4 border rounded-2xl shadow">
-      <h2 className="text-2xl font-bold mb-4">افزودن کاربر جدید</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-2xl mx-auto mt-10 p-6 border rounded-2xl shadow">
+      <div className='flex flex-row justify-between '>
+ <h2 className="text-2xl font-bold mb-4">افزودن کاربر جدید</h2>
+ <Link href="/dashboard" className="w-full sm:w-auto">
+      <Button className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white h-9 px-5 flex items-center cursor-pointer gap-3">
+          بازگشت
+      </Button>
+    </Link>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 mt-5">
         <Input 
           placeholder="نام" 
           value={name} 
           onChange={(e) => setName(e.target.value)} 
           required 
         />
+        
         <Input 
           placeholder="ایمیل" 
           type="email"

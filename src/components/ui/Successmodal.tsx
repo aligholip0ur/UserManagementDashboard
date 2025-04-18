@@ -60,7 +60,7 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
 
           <button
             onClick={handleClose}
-            className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
           >
             ادامه
           </button>
