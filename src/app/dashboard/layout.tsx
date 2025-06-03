@@ -43,23 +43,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="min-h-screen bg-gray-50">
   {/* Header Section */}
   <header className="bg-white shadow">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4">
            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
              <h1 className="text-2xl md:text-3xl font-bold text-gray-800">پنل مدیریت</h1>
              {user && (
-               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                 <p className="text-gray-600 text-sm md:text-base">
+               <div className="flex flex-row gap-7 justify-between">
+               <div>
+               <p className="text-gray-600 text-md md:text-lg">
                    خوش آمدید, <span className="font-medium text-gray-800">{user.email}</span>
                  </p>
-                 <button
+               </div>
+               <div className=''>
+               <button
                    onClick={handleLogout}
-                   className="px-3 py-1.5 bg-rose-600 cursor-pointer text-white text-sm rounded-md hover:bg-rose-700 transition-colors flex items-center gap-1"
+                   className="px-3 p-2 bg-rose-600 cursor-pointer text-white text-sm rounded-md hover:bg-rose-700 transition-colors flex items-center gap-1"
                  >
                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                    </svg>
                    خروج
                  </button>
+
+               </div>
                </div>
              )}
            </div>

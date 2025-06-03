@@ -15,6 +15,7 @@ type User = {
 
 export default function UserListPage() {
   const [users, setUsers] = useState<User[]>([])
+  const [search, setSearch] = useState('')
 
   const fetchUsers = async () => {
     const { data, error } = await supabase.from('users').select('*')
@@ -34,16 +35,31 @@ export default function UserListPage() {
     }
   }
 
+  const normalizedSearch = search.toLowerCase()
+
+  const filteredUsers: User[] = users.filter((user) => {
+    return (
+      user.name?.toLowerCase().includes(normalizedSearch) ||
+      user.email?.toLowerCase().includes(normalizedSearch) ||
+      user.location?.toLowerCase().includes(normalizedSearch)
+    )
+  })
+
   useEffect(() => {
     fetchUsers()
   }, [])
 
   return (
-    <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
-  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-    <div>
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800">مدیریت کاربران سیستم</h1>
-      <p className="text-gray-500 mt-2">تعداد کاربران: {users.length} نفر</p>
+    <div className="p-3 md:p-8 bg-white rounded-xl shadow-sm border border-gray-100">
+  <div className="flex flex-col md:flex-row md:justify-between  md:items-center mb-8">
+    <div className='flex flex-col md:flex-row  md:gap-3'>
+      <div className=''>
+      <h1 className="text-xl text-center md:text-3xl font-bold text-gray-800">مدیریت کاربران سیستم</h1>
+      <p className="text-gray-500  my-2">تعداد کاربران: {users.length} نفر</p>
+      </div>
+      <div className='flex justify-center my-2 md:block'>
+        <input type="text" placeholder="جستجوی کاربر" onChange={(e) => setSearch(e.target.value)} className=" bg-gray-100 border border-gray-200 rounded-md p-2" />
+      </div>
     </div>
     <div className='flex flex-row gap-3'>
     <Link href="/dashboard/adduser" className="w-full sm:w-auto">
@@ -84,30 +100,30 @@ export default function UserListPage() {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 whitespace-nowrap">اطلاعات کاربر</th>
-            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 whitespace-nowrap">اطلاعات تماس</th>
-            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 whitespace-nowrap">موقعیت جغرافیایی</th>
-            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 whitespace-nowrap">عملیات</th>
+            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 ">اطلاعات کاربر</th>
+            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 ">اطلاعات تماس</th>
+            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 ">موقعیت جغرافیایی</th>
+            <th scope="col" className="px-6 py-4 text-right text-sm font-medium text-gray-700 ">عملیات</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <tr key={user.id} className="hover:bg-gray-50 transition-colors">
               <td className="px-6 py-5 whitespace-nowrap">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 h-12 w-12 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  <div className=" md:h-12 md:w-12 h-8 w-8 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full flex items-center justify-center text-white font-bold text-md md:text-lg">
                     {user.name.charAt(0)}
                   </div>
                   <div className="mr-4">
                     <div className="text-base font-medium text-gray-900">{user.name}</div>
-                    <div className="text-sm text-gray-500 mt-1">شناسه: {user.id}</div>
+                    <div className="text-xs md:text-lg text-gray-500 mt-1">شناسه: {user.id}</div>
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-5 whitespace-nowrap">
+              <td className="px-6 py-5 ">
                 <div className="text-base text-gray-900">{user.email}</div>
               </td>
-              <td className="px-6 py-5 whitespace-nowrap">
+              <td className="px-6 py-5">
                 <div className="text-base font-medium text-gray-800">{user.location}</div>
                 <div className="text-sm text-gray-500 mt-1 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,8 +133,8 @@ export default function UserListPage() {
                   {user.location || 'نامشخص'}
                 </div>
               </td>
-              <td className="px-6 py-5 whitespace-nowrap">
-                <div className="flex gap-3 justify-end">
+              <td className="px-6 py-5 ">
+                <div className="flex gap-3">
                   <Link href={`/dashboard/users/edit/${user.id}`}>
                     <Button variant="outline" className="border-blue-500 cursor-pointer text-blue-600 hover:bg-blue-50 h-10 px-4 flex items-center gap-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
